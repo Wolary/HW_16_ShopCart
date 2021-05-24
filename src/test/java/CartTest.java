@@ -1,0 +1,39 @@
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+
+public class CartTest {
+
+    @Test
+    @DisplayName("Добавляем товар в корзину и проверяем с помощью Api")
+    void addToCartTest() {
+       int item = 1;
+
+        String cartSize = given()
+                        .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                        .body("addtocart_18.EnteredQuantity=" + item)
+                        .cookie("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739")
+                        .when()
+                        .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
+                        .then()
+                        .statusCode(200)
+                        .extract().path("updatetopcartsectionhtml");
+        Integer newCartSize = Integer.parseInt(cartSize.substring(1, 2));
+
+
+        given()
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .body("addtocart_18.EnteredQuantity=" + item)
+                .cookie("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739")
+                .when()
+                .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
+                .then()
+                .statusCode(200)
+                .log().body()
+                .body("success", is(true))
+                .body("updatetopcartsectionhtml", is(String.format("(%s)", newCartSize + item)));
+    }
+
+}
