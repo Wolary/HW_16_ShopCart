@@ -94,7 +94,7 @@ public class CartTest {
 
         open("http://demowebshop.tricentis.com/");
 
-        //так у студента в дз и работает, у меня почему то нет.
+        //так у студента в дз работает, у меня почему то нет.
 //        Cookie uiCookie = new Cookie("userCookie", userCookie());
 //        getWebDriver().manage().addCookie(uiCookie);
 
