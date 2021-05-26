@@ -3,23 +3,36 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 public class CartTest {
     int item = 1;
-//    String userCookie = ("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739");
+    String userCookie = ("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739");
 
-    String Cookie;
-        void getCookie () {
-            open("http://demowebshop.tricentis.com/");
-            Cookie = WebDriverRunner.getWebDriver().manage().getCookieNamed("userCookie").getValue();
-        }
 
-//    String Cookie() {
+    String newCookie = getWebDriver().manage().getCookieNamed("userCookie").getValue(userCookie);
+
+
+
+
+//    String userCookie;
+//    void getCookie() {
+//        open("http://demowebshop.tricentis.com/");
+//        userCookie = getWebDriver().manage().getCookieNamed("userCookie").getValue(userCookie);
+//        System.out.println(userCookie);
+//    }
+
+
+
+
+
+ //    String Cookie() {
 //        return
 //                open("http://demowebshop.tricentis.com/");
 //        given()
@@ -41,7 +54,7 @@ public class CartTest {
         String cartSize = given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("addtocart_18.EnteredQuantity=" + item)
-                .cookie(Cookie)
+                .cookie(userCookie)
                 .when()
                 .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
                 .then()
@@ -53,7 +66,7 @@ public class CartTest {
         given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("addtocart_18.EnteredQuantity=" + item)
-                .cookie(Cookie)
+                .cookie(userCookie)
                 .when()
                 .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
                 .then()
@@ -70,7 +83,7 @@ public class CartTest {
         String cartSize = given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("addtocart_18.EnteredQuantity=" + item)
-                .cookie(Cookie)
+                .cookie(userCookie)
                 .when()
                 .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
                 .then()
@@ -81,14 +94,14 @@ public class CartTest {
         given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("addtocart_18.EnteredQuantity=" + item)
-                .cookie(Cookie)
+                .cookie(userCookie)
                 .when()
                 .post("http://demowebshop.tricentis.com/addproducttocart/details/18/1")
                 .then()
                 .statusCode(200);
 
         open("http://demowebshop.tricentis.com/");
-//        getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie));
+        getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie));
         Selenide.refresh();
         $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", newCartSize + item)));
     }
