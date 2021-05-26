@@ -1,12 +1,14 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
@@ -20,6 +22,14 @@ public class CartTest {
             post = "http://demowebshop.tricentis.com/addproducttocart/details/18/1",
             body = "addtocart_18.EnteredQuantity=";
 
+
+    //так тоже не хочет
+//    String userCookie() {
+//        open("http://demowebshop.tricentis.com/");
+//        String userCookie = WebDriverRunner.getWebDriver().manage().getCookieNamed("userCookie").getValue();
+//    }
+
+//        //работает, но не передает куки в браузер, хотя у других все норм
     String userCookie() {
         return given()
                 .contentType(contentType)
@@ -86,11 +96,13 @@ public class CartTest {
 
         open("http://demowebshop.tricentis.com/");
 
-        Cookie uiCookie = new Cookie("userCookie", userCookie());
-        WebDriverRunner.getWebDriver().manage().addCookie(uiCookie);
+        //так у студента в дз и работает.
+//        Cookie uiCookie = new Cookie("userCookie", userCookie());
+//        getWebDriver().manage().addCookie(uiCookie);
 
-//        getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie()));
+        getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie()));
         Selenide.refresh();
         $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", newCartSize + item)));
     }
 }
+
