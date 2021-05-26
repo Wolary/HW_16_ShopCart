@@ -1,6 +1,6 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.BeforeAll;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,20 +14,25 @@ public class CartTest {
 //    String userCookie = ("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739");
 
     String Cookie;
+        void getCookie () {
+            open("http://demowebshop.tricentis.com/");
+            Cookie = WebDriverRunner.getWebDriver().manage().getCookieNamed("userCookie").getValue();
+        }
 
-    static void extractCookie() {
-        Cookie =
-                open("http://demowebshop.tricentis.com/");
-        given()
-                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                .when()
-                .get("http://demowebshop.tricentis.com/")
-                .then()
-                .statusCode(200)
-                .log().body()
-                .extract()
-                .cookie("browserCookie");
-    }
+//    String Cookie() {
+//        return
+//                open("http://demowebshop.tricentis.com/");
+//        given()
+//                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+//                .when()
+//                .get("http://demowebshop.tricentis.com/")
+//                .then()
+//                .statusCode(200)
+//                .log().body()
+//                .extract()
+//                .cookie("browserCookie");
+//    }
+
 
     @Test
     @DisplayName("Добавляем товар в корзину и проверяем с помощью Api")
