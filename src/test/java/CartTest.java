@@ -17,7 +17,6 @@ public class CartTest {
             post = "http://demowebshop.tricentis.com/addproducttocart/details/18/1",
             body = "addtocart_18.EnteredQuantity=";
 
-
     String userCookie() {
         return given()
                 .contentType(contentType)
@@ -25,35 +24,9 @@ public class CartTest {
                 .get("http://demowebshop.tricentis.com/")
                 .then()
                 .statusCode(200)
-//                .log().body()
                 .extract()
                 .cookie("userCookie");
     }
-
-//    String userCookie;
-//    void getCookie() {
-//        open("http://demowebshop.tricentis.com/");
-//        userCookie = getWebDriver().manage().getCookieNamed("userCookie").getValue(userCookie);
-//        System.out.println(userCookie);
-//    }
-
-//    String newCookie = getWebDriver().manage().getCookieNamed("userCookie").getValue(userCookie);
-
-
-    //    String Cookie() {
-//        return
-//                open("http://demowebshop.tricentis.com/");
-//        given()
-//                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-//                .when()
-//                .get("http://demowebshop.tricentis.com/")
-//                .then()
-//                .statusCode(200)
-//                .log().body()
-//                .extract()
-//                .cookie("browserCookie");
-//    }
-
 
     @Test
     @DisplayName("Добавляем товар в корзину и проверяем с помощью Api")
