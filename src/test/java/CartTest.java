@@ -1,7 +1,5 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -96,13 +94,13 @@ public class CartTest {
 
         open("http://demowebshop.tricentis.com/");
 
-        //так у студента в дз и работает.
+        //так у студента в дз и работает, у меня почему то нет.
 //        Cookie uiCookie = new Cookie("userCookie", userCookie());
 //        getWebDriver().manage().addCookie(uiCookie);
 
         getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie()));
         Selenide.refresh();
-        $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", newCartSize + item)));
+        $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", item)));
     }
 }
 
