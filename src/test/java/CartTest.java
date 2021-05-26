@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 public class CartTest {
     int item = 1;
 
-    //Эта кука взята из браузера, так можно подсовывать их вручную
+    //Эта кука взята из браузера, так можно подсовывать их вручную, работает с api, но не работает с ui
     //   String userCookie = ("Nop.customer=67a0e9d8-9d98-464d-928e-890a321f51ef; NopCommerce.RecentlyViewedProducts=RecentlyViewedProductIds=17; ARRAffinity=06e3c6706bb7098b5c9133287f2a8d510a64170f97e4ff5fa919999d67a34a46; __utma=78382081.201302361.1621858739.1621858739.1621858739.1; __utmc=78382081; __utmz=78382081.1621858739.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __atuvc=3|21; __atuvs=60ab99b2bc37f6db002; __utmb=78382081.4.10.1621858739");
 
     String contentType = "application/x-www-form-urlencoded; charset=UTF-8",
@@ -27,7 +27,7 @@ public class CartTest {
 //        String userCookie = WebDriverRunner.getWebDriver().manage().getCookieNamed("userCookie").getValue();
 //    }
 
-//        //работает, но не передает куки в браузер, хотя у других все норм
+          //работает, но не передает куки в браузер, хотя у других все норм
     String userCookie() {
         return given()
                 .contentType(contentType)
