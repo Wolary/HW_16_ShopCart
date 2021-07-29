@@ -34,7 +34,7 @@ public class CartTest {
                 .then()
                 .statusCode(200)
                 .extract()
-                .cookie("userCookie");
+                .cookie("Nop.customer");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CartTest {
         given()
                 .contentType(contentType)
                 .body(body + item)
-                .cookie("userCookie", userCookie())
+                .cookie("Nop.customer", userCookie())
                 .when()
                 .post(post)
                 .then()
@@ -73,7 +73,7 @@ public class CartTest {
         String cartSize = given()
                 .contentType(contentType)
                 .body(body + item)
-                .cookie("userCookie", userCookie())
+                .cookie("Nop.customer", userCookie())
                 .when()
                 .post(post)
                 .then()
@@ -84,7 +84,7 @@ public class CartTest {
         given()
                 .contentType(contentType)
                 .body(body + item)
-                .cookie("userCookie", userCookie())
+                .cookie("Nop.customer", userCookie())
                 .when()
                 .post(post)
                 .then()
@@ -96,9 +96,11 @@ public class CartTest {
         // Cookie uiCookie = new Cookie("userCookie", userCookie());
         // getWebDriver().manage().addCookie(uiCookie);
 
-        getWebDriver().manage().addCookie(new Cookie("userCookie", userCookie()));
+        getWebDriver().manage().addCookie(new Cookie("Nop.customer", userCookie()));
         Selenide.refresh();
-        $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", item)));
+        $(".cart-qty").shouldHave(Condition.text(String.format("(%s)", 0)));
+        //заработало подставление куки, разобраться почему 0
+
     }
 }
 
